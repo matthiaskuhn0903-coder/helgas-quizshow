@@ -6,17 +6,22 @@
   var TOPIC = "helga-wwm-4a5824fa660cdd73";
   var MQTT_URL = "wss://broker.hivemq.com:8884/mqtt";
   var MQTT_TOPIC = "helga-wwm/4a5824fa660cdd73/state";
+  var MQTT_VOTES = "helga-wwm/4a5824fa660cdd73/votes";
+  var VOTE_TOPIC = TOPIC + "-votes";
   var STORE_KEY = "helga-quiz-game";
 
   var Q = window.QUIZ || [], N = Q.length, L = ["A", "B", "C", "D"];
   var MONEY = ["50", "100", "500", "1.000", "2.000", "8.000", "32.000", "125.000", "500.000"];
-  var FRESH = { step: "intro", q: 0, picked: null, fifty: null, poll: null, saal: null, ts: 0 };
+  var FRESH = { step: "intro", q: 0, picked: null, fifty: null, poll: null, saal: null, vote: null, ts: 0 };
 
   var G = Object.assign({}, FRESH);
   var app = document.getElementById("app");
   var liveEl = document.getElementById("live");
   var host = { busy: false, msg: "", err: false, confirmReset: false, pollDraft: null, sound: true };
   var lastId = "all";
+  var voterId = (function () { var k = "helga-voter", v = null; try { v = localStorage.getItem(k); } catch (e) {} if (!v) { v = Math.random().toString(36).slice(2, 12); try { localStorage.setItem(k, v); } catch (e) {} } return v; })();
+  var myVote = {}; // vote id -> gewählte Antwort
+  var tally = {}; // nur am Pult: wer -> Antwort
 
   function isHost() { return location.hash === "#pult"; }
   function view() { if (isHost()) return "host"; if (location.hash === "#kandidat") return "kandidat"; return "publikum"; }
@@ -41,11 +46,19 @@
     }
     var q = Q[G.q], i = G.q, gone = (G.fifty === i) ? q.fifty : [];
     var h = '<div class="stage"><div class="topline"><div><p class="label">Frage ' + (i + 1) + ' von ' + N + '</p><div class="stake">' + esc(stakeLabel(i)) + '</div></div><div class="jokers">' +
-      '<span class="joker' + (G.fifty !== null ? ' used' : '') + '">50:50</span><span class="joker' + (G.poll ? ' used' : '') + '">Publikum</span><span class="joker' + (G.saal !== null ? ' used' : '') + '">Saal</span></div></div>';
+      '<span class="joker' + (G.fifty !== null ? ' used' : '') + '">50:50</span><span class="joker' + (G.poll || G.vote ? ' used' : '') + '">Publikum</span><span class="joker' + (G.saal !== null ? ' used' : '') + '">Saal</span></div></div>';
     if (q.img) h += '<img class="pic" src="' + esc(q.img) + '" alt="Bild zur Frage">';
-    h += '<div class="loz q">' + esc(q.q) + '</div><div class="answers">';
+    var voting = votingNow(), canVote = voting && v === "publikum", mine = voting ? myVote[G.vote.id] : undefined;
+    h += '<div class="loz q">' + esc(q.q) + '</div>';
+    if (canVote) h += '<div class="banner"><strong>Publikumsjoker:</strong> ' + (mine === undefined ? 'Tippe auf die Antwort, die du für richtig hältst.' : 'Deine Stimme: ' + L[mine] + '. Du kannst noch wechseln.') + '</div>';
+    else if (voting) h += '<div class="banner"><strong>Publikumsjoker:</strong> Das Publikum stimmt gerade ab …</div>';
+    h += '<div class="answers">';
     for (var a = 0; a < 4; a++) {
       var cls = "loz ans";
+      if (canVote && gone.indexOf(a) === -1) {
+        h += '<button type="button" class="' + cls + ' votable' + (mine === a ? ' voted' : '') + '" data-vote="' + a + '"><b>' + L[a] + ':</b> <span>' + esc(q.a[a]) + '</span></button>';
+        continue;
+      }
       if (gone.indexOf(a) > -1) cls += " gone";
       else if (G.step === "locked" && G.picked === a) cls += " picked";
       else if (G.step === "reveal" && a === q.c) cls += " right";
@@ -61,6 +74,9 @@
     }
     return h + '</div>';
   }
+  function votingNow() { return !!(G.vote && G.vote.open && G.vote.q === G.q && (G.step === "question" || G.step === "locked")); }
+  function tallyCounts() { var c = [0, 0, 0, 0], n = 0; Object.keys(tally).forEach(function (k) { var x = tally[k]; if (x >= 0 && x < 4) { c[x]++; n++; } }); return { c: c, n: n }; }
+  function tallyHtml() { var t = tallyCounts(); return t.n + (t.n === 1 ? ' Stimme' : ' Stimmen') + ': ' + L.map(function (l, k) { return l + ' ' + t.c[k]; }).join(' · '); }
   function ladder() {
     var cur = G.step === "finale" ? N - 1 : G.q, h = '<div class="ladder" aria-label="Gewinnleiter">';
     for (var i = N - 1; i >= 0; i--) {
@@ -88,10 +104,14 @@
         }
         d += '</div></div><div class="group"><p class="label">Joker</p><div class="row">' +
           '<button class="btn" data-act="fifty"' + (G.fifty !== null || host.busy ? ' disabled' : '') + '>50:50</button>' +
-          '<button class="btn" data-act="polldraft"' + (G.poll || host.busy ? ' disabled' : '') + '>Publikum</button>' +
+          '<button class="btn" data-act="voteopen"' + (G.poll || G.vote || host.busy ? ' disabled' : '') + '>Publikum abstimmen lassen</button>' +
           '<button class="btn" data-act="saal"' + (G.saal !== null || host.busy ? ' disabled' : '') + '>Joker im Saal</button></div>';
+        if (votingNow()) {
+          d += '<div class="card"><p class="label">Abstimmung läuft</p><p id="tally">' + tallyHtml() + '</p>' +
+            '<div class="row"><button class="btn primary" data-act="voteclose"' + dis + '>Ergebnis zeigen</button><button class="btn ghost" data-act="voteadjust">Anpassen</button></div></div>';
+        }
         if (host.pollDraft) {
-          d += '<p class="hint">Hände zählen oder schätzen, Prozente eintragen.</p><div class="pollin">';
+          d += '<p class="hint">Prozente anpassen, dann zeigen.</p><div class="pollin">';
           for (var p = 0; p < 4; p++) d += '<label for="poll' + p + '">' + L[p] + '<input id="poll' + p + '" type="number" min="0" max="100" inputmode="numeric" value="' + host.pollDraft[p] + '"></label>';
           d += '</div><div class="row"><button class="btn primary" data-act="poll"' + dis + '>Ergebnis zeigen</button><button class="btn ghost" data-act="pollcancel">Abbrechen</button></div>';
         }
@@ -137,6 +157,26 @@
       if (!isHost() || before !== G.step + G.q) render();
     } catch (e) {}
   }
+  function handleVote(obj) {
+    if (!isHost() || !obj || !G.vote || obj.vid !== G.vote.id || !G.vote.open) return;
+    var c = +obj.c; if (!(c >= 0 && c < 4) || typeof obj.who !== "string") return;
+    tally[obj.who.slice(0, 20)] = c;
+    var el = document.getElementById("tally"); if (el) el.textContent = tallyHtml();
+  }
+  function pollVotes() {
+    if (!votingNow()) return;
+    fetch(RELAY + "/" + VOTE_TOPIC + "/json?poll=1&since=" + Math.floor((G.vote.t || Date.now()) / 1000 - 5))
+      .then(function (r) { return r.text(); })
+      .then(function (t) { t.split("\n").forEach(function (line) { if (!line) return; try { var m = JSON.parse(line); if (m.event === "message") handleVote(JSON.parse(m.message)); } catch (e) {} }); })
+      .catch(function () {});
+  }
+  function sendVote(c) {
+    if (!votingNow()) return;
+    myVote[G.vote.id] = c; render();
+    var body = JSON.stringify({ vid: G.vote.id, who: voterId, c: c });
+    if (mq && mqOk) { try { mq.publish(MQTT_VOTES, body, { qos: 1 }); return; } catch (e) {} }
+    fetch(RELAY + "/" + VOTE_TOPIC, { method: "POST", body: body }).catch(function () {});
+  }
   function poll() {
     return fetch(RELAY + "/" + TOPIC + "/json?poll=1&since=" + encodeURIComponent(lastId))
       .then(function (r) { return r.text(); })
@@ -159,10 +199,13 @@
     if (!window.mqtt) return;
     try {
       mq = window.mqtt.connect(MQTT_URL, { clientId: "helga-" + Math.random().toString(16).slice(2, 10), reconnectPeriod: 2000, connectTimeout: 8000, clean: true });
-      mq.on("connect", function () { mqOk = true; liveNow(); mq.subscribe(MQTT_TOPIC, { qos: 1 }); });
+      mq.on("connect", function () { mqOk = true; liveNow(); mq.subscribe(MQTT_TOPIC, { qos: 1 }); if (isHost()) mq.subscribe(MQTT_VOTES, { qos: 1 }); });
       mq.on("close", function () { mqOk = false; liveNow(); });
       mq.on("offline", function () { mqOk = false; liveNow(); });
-      mq.on("message", function (t, payload) { apply({ message: payload.toString() }); });
+      mq.on("message", function (t, payload) {
+        if (t === MQTT_VOTES) { try { handleVote(JSON.parse(payload.toString())); } catch (e) {} return; }
+        apply({ message: payload.toString() });
+      });
     } catch (e) {}
   }
   function send() {
@@ -240,11 +283,19 @@
     else if (act === "next") commit(i === N - 1 ? { step: "finale" } : { step: "question", q: i + 1, picked: null });
     else if (act === "fifty") commit({ fifty: i });
     else if (act === "saal") commit({ saal: i });
-    else if (act === "polldraft") { host.pollDraft = suggestPoll(); render(); }
+    else if (act === "voteopen") { tally = {}; commit({ vote: { q: i, open: true, id: Math.random().toString(36).slice(2, 10), t: Date.now() } }); }
+    else if (act === "voteclose") {
+      var t = tallyCounts(), res = t.c.map(function (x) { return t.n ? Math.round(x * 100 / t.n) : 0; });
+      commit({ vote: Object.assign({}, G.vote, { open: false }), poll: { q: i, pct: res, n: t.n } });
+    }
+    else if (act === "voteadjust") {
+      var t2 = tallyCounts();
+      host.pollDraft = t2.n ? t2.c.map(function (x) { return Math.round(x * 100 / t2.n); }) : suggestPoll(); render();
+    }
     else if (act === "pollcancel") { host.pollDraft = null; render(); }
     else if (act === "poll") {
       var pct = [0, 1, 2, 3].map(function (p) { var el = document.getElementById("poll" + p); return Math.max(0, Math.min(100, parseInt(el && el.value, 10) || 0)); });
-      commit({ poll: { q: i, pct: pct } });
+      commit({ vote: G.vote ? Object.assign({}, G.vote, { open: false }) : null, poll: { q: i, pct: pct } });
     }
     else if (act === "back") {
       if (G.step === "finale") commit({ step: "reveal", q: N - 1, picked: Q[N - 1].c });
@@ -257,7 +308,12 @@
     else if (act === "resetcancel") { host.confirmReset = false; render(); }
     else if (act === "reset") { stopDrone(); commit(Object.assign({}, FRESH)); }
   });
+  app.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-vote]"); if (!b || isHost()) return;
+    sendVote(+b.dataset.vote);
+  });
   window.addEventListener("hashchange", render);
+  setInterval(function () { if (isHost() && votingNow()) pollVotes(); }, 2500);
 
   /* ---------- Start ---------- */
   if (isHost()) { try { var saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); if (saved && saved.step) G = saved; } catch (e) {} }
