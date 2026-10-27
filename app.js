@@ -127,7 +127,14 @@
     d += '<div class="group"><p class="label">Ton & Technik</p><div class="row">' +
       '<button class="btn' + (host.sound ? ' on' : '') + '" data-act="sound">Sound: ' + (host.sound ? 'an' : 'aus') + '</button>' +
       '<button class="btn" data-act="tension">Spannung abspielen</button>' +
+      '<button class="btn" data-act="stopall">Alles stoppen</button>' +
       '<button class="btn" data-act="resend"' + dis + '>Stand erneut senden</button></div>' +
+      '<details class="sounds"' + (host.soundsOpen ? ' open' : '') + '><summary>Eigene Sounds (' + Object.keys(custom).length + ' von ' + SLOTS.length + ')</summary><p class="hint">Audiodateien vom MacBook auswählen. Sie bleiben nur in diesem Browser und ersetzen die eingebauten Töne.</p>' +
+      SLOTS.map(function (sl) {
+        var c = custom[sl[0]];
+        return '<div class="slot"><span>' + esc(sl[1]) + '</span>' + (c ? '<small>' + esc(c.name) + '</small><div class="row"><button class="btn" data-act="testslot" data-slot="' + sl[0] + '">Test</button><button class="btn ghost" data-act="clearslot" data-slot="' + sl[0] + '">Entfernen</button></div>'
+          : '<label class="btn" for="f-' + sl[0] + '">Datei wählen</label><input type="file" accept="audio/*" id="f-' + sl[0] + '" data-slot="' + sl[0] + '" hidden>') + '</div>';
+      }).join('') + '</details>' +
       '<p class="hint">Helgas Bildschirm: Link mit <code>#kandidat</code>. Publikum: Link ohne Zusatz.</p>' +
       (host.confirmReset ? '<div class="row"><button class="btn danger" data-act="reset"' + dis + '>Ja, alles zurücksetzen</button><button class="btn ghost" data-act="resetcancel">Abbrechen</button></div>'
         : '<button class="btn danger" data-act="resetask"' + dis + '>Spiel zurücksetzen</button>') + '</div>';
@@ -233,6 +240,41 @@
     send();
   }
 
+  /* ---------- Eigene Sounddateien (bleiben im Browser des Pults) ---------- */
+  var SLOTS = [["start", "Neue Frage"], ["tension", "Spannung (läuft in Schleife)"], ["lock", "Eingeloggt"], ["right", "Richtig"], ["wrong", "Falsch"], ["finale", "Finale"]];
+  var custom = {}; // slot -> {name, url}
+  var playing = {}; // slot -> Audio
+  function idb() {
+    return new Promise(function (res, rej) {
+      if (!window.indexedDB) return rej();
+      var r = indexedDB.open("helga-sounds", 1);
+      r.onupgradeneeded = function () { r.result.createObjectStore("s"); };
+      r.onsuccess = function () { res(r.result); }; r.onerror = rej;
+    });
+  }
+  function idbPut(k, v) { return idb().then(function (db) { return new Promise(function (res) { var t = db.transaction("s", "readwrite"); if (v === null) t.objectStore("s").delete(k); else t.objectStore("s").put(v, k); t.oncomplete = res; t.onerror = res; }); }); }
+  function idbAll() {
+    return idb().then(function (db) { return new Promise(function (res) {
+      var out = {}, t = db.transaction("s", "readonly"), st = t.objectStore("s"), req = st.openCursor();
+      req.onsuccess = function () { var c = req.result; if (c) { out[c.key] = c.value; c.continue(); } else res(out); };
+      req.onerror = function () { res(out); };
+    }); });
+  }
+  function loadCustom() {
+    if (!isHost()) return;
+    idbAll().then(function (all) {
+      Object.keys(all).forEach(function (k) { var v = all[k]; if (v && v.blob) custom[k] = { name: v.name, url: URL.createObjectURL(v.blob) }; });
+      render();
+    }).catch(function () {});
+  }
+  function playSlot(slot, loop) {
+    var c = custom[slot]; if (!c) return false;
+    stopSlot(slot);
+    var a = new Audio(c.url); a.loop = !!loop; a.play().catch(function () {}); playing[slot] = a; return true;
+  }
+  function stopSlot(slot) { var a = playing[slot]; if (a) { try { a.pause(); a.currentTime = 0; } catch (e) {} delete playing[slot]; } }
+  function stopAllSlots() { Object.keys(playing).forEach(stopSlot); }
+
   /* ---------- Sounds (nur am Pult) ---------- */
   var ac = null, drone = null;
   function ctx() { if (!ac) { var C = window.AudioContext || window.webkitAudioContext; if (C) ac = new C(); } if (ac && ac.state === "suspended") ac.resume(); return ac; }
@@ -245,8 +287,10 @@
     g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + start + dur);
     o.connect(g); g.connect(c.destination); o.start(c.currentTime + start); o.stop(c.currentTime + start + dur + 0.05);
   }
-  function stopDrone() { if (drone) { try { drone.g.gain.setTargetAtTime(0.0001, ac.currentTime, 0.2); var d = drone; setTimeout(function () { d.o.forEach(function (o) { o.stop(); }); }, 800); } catch (e) {} drone = null; } }
+  function stopDrone() { stopSlot("tension"); if (drone) { try { drone.g.gain.setTargetAtTime(0.0001, ac.currentTime, 0.2); var d = drone; setTimeout(function () { d.o.forEach(function (o) { o.stop(); }); }, 800); } catch (e) {} drone = null; } }
   function startDrone() {
+    if (playing.tension) return;
+    if (playSlot("tension", true)) return;
     var c = ctx(); if (!c || drone) return;
     var g = c.createGain(); g.gain.value = 0.0001; g.connect(c.destination);
     var lfo = c.createOscillator(), lg = c.createGain(); lfo.frequency.value = 1.1; lg.gain.value = 0.05; lfo.connect(lg); lg.connect(g.gain);
@@ -259,12 +303,20 @@
   }
   function sfx(prev, next, patch) {
     if (!host.sound) return;
-    if (next === "question" && (prev === "intro" || prev === "reveal")) { [262, 330, 392].forEach(function (f, k) { tone(f, k * 0.12, 0.5, "triangle", 0.2); }); setTimeout(startDrone, 600); }
-    else if (next === "locked") { stopDrone(); tone(98, 0, 0.9, "sawtooth", 0.18); tone(147, 0, 0.9, "triangle", 0.15); }
-    else if (next === "reveal") { var ok = G.picked === Q[G.q].c; if (ok) [523, 659, 784, 1047].forEach(function (f, k) { tone(f, k * 0.11, 0.6, "triangle", 0.22); }); else { tone(196, 0, 0.5, "square", 0.12); tone(147, 0.4, 0.8, "square", 0.12); } }
-    else if (next === "finale") { stopDrone(); [392, 523, 659, 784, 659, 784, 1047].forEach(function (f, k) { tone(f, k * 0.16, k === 6 ? 1.6 : 0.4, "triangle", 0.25); }); }
+    if (next === "question" && (prev === "intro" || prev === "reveal")) {
+      stopAllSlots();
+      if (custom.start) { var a = custom.start && playSlot("start"); var st = playing.start; if (st) st.onended = function () { if (G.step === "question") startDrone(); }; if (!custom.tension) setTimeout(startDrone, 600); }
+      else { [262, 330, 392].forEach(function (f, k) { tone(f, k * 0.12, 0.5, "triangle", 0.2); }); setTimeout(startDrone, 600); }
+    }
+    else if (next === "locked") { stopDrone(); stopSlot("start"); if (!playSlot("lock")) { tone(98, 0, 0.9, "sawtooth", 0.18); tone(147, 0, 0.9, "triangle", 0.15); } }
+    else if (next === "reveal") {
+      stopSlot("lock"); var ok = G.picked === Q[G.q].c;
+      if (ok) { if (!playSlot("right")) [523, 659, 784, 1047].forEach(function (f, k) { tone(f, k * 0.11, 0.6, "triangle", 0.22); }); }
+      else if (!playSlot("wrong")) { tone(196, 0, 0.5, "square", 0.12); tone(147, 0.4, 0.8, "square", 0.12); }
+    }
+    else if (next === "finale") { stopDrone(); stopAllSlots(); if (!playSlot("finale")) [392, 523, 659, 784, 659, 784, 1047].forEach(function (f, k) { tone(f, k * 0.16, k === 6 ? 1.6 : 0.4, "triangle", 0.25); }); }
     else if (patch && patch.fifty !== undefined) { tone(880, 0, 0.15, "sine", 0.2); tone(440, 0.15, 0.3, "sine", 0.2); }
-    else if (next === "intro") stopDrone();
+    else if (next === "intro") { stopDrone(); stopAllSlots(); }
   }
   function suggestPoll() {
     var q = Q[G.q], left = [0, 1, 2, 3].filter(function (a) { return a !== q.c && !(G.fifty === G.q && q.fifty.indexOf(a) > -1); });
@@ -302,11 +354,21 @@
       else if (G.step === "reveal") commit({ step: "locked" });
     }
     else if (act === "sound") { host.sound = !host.sound; if (!host.sound) stopDrone(); render(); }
-    else if (act === "tension") { if (drone) stopDrone(); else startDrone(); }
+    else if (act === "tension") { if (drone || playing.tension) stopDrone(); else startDrone(); }
+    else if (act === "stopall") { stopDrone(); stopAllSlots(); }
+    else if (act === "testslot") { var sl = b.dataset.slot; if (playing[sl]) stopSlot(sl); else playSlot(sl, false); }
+    else if (act === "clearslot") { var s2 = b.dataset.slot; stopSlot(s2); if (custom[s2]) URL.revokeObjectURL(custom[s2].url); delete custom[s2]; idbPut(s2, null).then(render, render); }
     else if (act === "resend") send();
     else if (act === "resetask") { host.confirmReset = true; render(); }
     else if (act === "resetcancel") { host.confirmReset = false; render(); }
     else if (act === "reset") { stopDrone(); commit(Object.assign({}, FRESH)); }
+  });
+  app.addEventListener("toggle", function (e) { if (e.target.classList && e.target.classList.contains("sounds")) host.soundsOpen = e.target.open; }, true);
+  app.addEventListener("change", function (e) {
+    var inp = e.target; if (!isHost() || !inp.dataset || !inp.dataset.slot || !inp.files || !inp.files[0]) return;
+    var f = inp.files[0], sl = inp.dataset.slot;
+    custom[sl] = { name: f.name, url: URL.createObjectURL(f) };
+    idbPut(sl, { name: f.name, blob: f }).then(render, render);
   });
   app.addEventListener("click", function (e) {
     var b = e.target.closest("button[data-vote]"); if (!b || isHost()) return;
@@ -318,6 +380,7 @@
   /* ---------- Start ---------- */
   if (isHost()) { try { var saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); if (saved && saved.step) G = saved; } catch (e) {} }
   render();
+  loadCustom();
   connectMqtt();
   poll().catch(function () {});
   // Sicherheitsnetz: ohne MQTT nach 6 s auf den zweiten Kanal wechseln, und alle 8 s nachsehen, solange nichts live ist
