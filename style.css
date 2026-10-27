@@ -114,9 +114,3 @@ button.ans{font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%}
 .ans.votable:active{transform:scale(.98)}
 .ans.votable:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .ans.voted{background:var(--gold);border-color:#ffe39a;color:var(--night)}.ans.voted b{color:var(--night)}
-.sounds{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-.sounds summary{cursor:pointer;font-weight:600}
-.sounds[open]{display:flex;flex-direction:column;gap:10px}
-.slot{display:flex;flex-direction:column;gap:4px;padding-top:8px;border-top:1px solid var(--line)}
-.slot small{color:var(--muted);overflow-wrap:anywhere}
-label.btn{display:inline-block;align-self:flex-start}
