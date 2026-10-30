@@ -63,8 +63,8 @@ window.QUIZ = [
   },
   {
     q: "Die Millionenfrage: In welcher dieser Städte warst du noch NIE?",
-    a: ["Regensburg", "Salzburg", "Budapest", "Wien"],
+    a: ["München", "Salzburg", "Budapest", "Wien"],
     c: 2,
-    note: "Regensburg, Salzburg und Wien kennt sie. Nach der Auflösung: „Budapest fehlt dir also noch … Das ändern wir jetzt!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, und Budapest ist mit dabei!“ Luftschlangen-Kanone und Bordkarte."
+    note: "München, Salzburg und Wien kennt sie. Nach der Auflösung: „Budapest fehlt dir also noch … Das ändern wir jetzt!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, und Budapest ist mit dabei!“ Luftschlangen-Kanone und Bordkarte."
   }
 ];
