@@ -5,44 +5,6 @@
 // 50:50 streicht zufällig zwei falsche Antworten.
 window.QUIZ = [
   {
-    q: "Auf welchem Berg bist du mit Ursula als Kind Schlitten gefahren?",
-    a: ["Annaberg", "Gritzberg", "Kakauberg", "Schneekoppe"],
-    c: 1,
-    note: "Frage kommt von Ursula. Lass sie erzählen, wie das damals war: Wer ist am häufigsten im Schnee gelandet?"
-  },
-  {
-    q: "Wie viele Schulen gab es in Karb, als du dort Kind warst?",
-    a: ["2", "3", "4", "5"],
-    c: 2,
-    note: "Frage kommt von Ursula. Danach fragen, auf welche der vier Schulen die beiden gegangen sind und wie ihr Schulweg war."
-  },
-  {
-    q: "Was berührst du auf diesem Foto? (Du bist rechts im Bild.)",
-    a: ["Einen Hund", "Eine Puppe", "Einen Teddybär", "Eine Katze"],
-    c: 3,
-    img: "img/kindheit-raetsel.jpg?v=3",
-    imgReveal: "img/kindheit-aufgeloest.jpg",
-    note: "Nach der Auflösung erscheint das Foto ohne Verpixelung. Fragen, wie die Katze hieß und wer das andere Mädchen ist."
-  },
-  {
-    q: "Du hast Matthias und deinen Mann einmal zum Spiel 1. FC Nürnberg gegen FC Bayern ins Stadion geschickt. Wie ging das Spiel aus?",
-    a: ["0:0", "3:0 für Bayern", "2:1 für Nürnberg", "3:0 für Nürnberg"],
-    c: 3,
-    note: "2. Februar 2007, Bundesliga im Frankenstadion. Tore: Saenko, Schroth, Vittek, Oliver Kahn stand bei Bayern im Tor. Eine echte Sensation, und du als Bayern-Fan mittendrin. Kurz erzählen, wie die Heimfahrt war."
-  },
-  {
-    q: "„Dem lebhaften, motorisch sehr unruhigen Schüler fällt es nicht immer leicht, die Regeln des Schulalltags einzuhalten.“ In wessen Zeugnis stand dieser Satz?",
-    a: ["Darius", "Thomas", "Leo", "David"],
-    c: 2,
-    note: "Leo ist da: Bitte ihn aufzustehen und frag, was er damals angestellt hat."
-  },
-  {
-    q: "Unsere Jugend führt dir jetzt vier Gesten vor. Welche davon war NIE ein Trend unter Jugendlichen?",
-    a: ["Der Dab", "Das Einhorn", "Der Floss", "Six Seven"],
-    c: 1,
-    note: "VORFÜHRUNG, bevor du die Antworten vorliest: Lara macht den Dab (Kopf in die Armbeuge, anderer Arm schräg ausgestreckt, ca. 2015/16). David macht das Einhorn (Faust auf den Kopf klopfen, dann mit dem Finger in die Luft zeigen, erfunden, todernst vorführen!). Leo macht den Floss (Arme vor und hinter dem Körper schwingen, ca. 2018, Fortnite). Sarah macht Six Seven (Hände auf und ab wie eine Waage, 2025). Bonus bei der Auflösung: „Six Seven“ bedeutet übrigens gar nichts, das ist genau der Witz. Am Ende macht der ganze Saal Six Seven."
-  },
-  {
     q: "Welchen dieser Sprüche hast du deinen beiden Söhnen NICHT mit auf den Weg gegeben?",
     a: ["Wo ein Wille ist, ist auch ein Weg", "Trau dich alles, mehr als Nein sagen können sie nicht", "Wer nichts macht, dem passiert auch nichts", "Iss deinen Teller leer, dann gibt's schönes Wetter"],
     c: 3,
@@ -54,6 +16,44 @@ window.QUIZ = [
     c: 2,
     img: "img/hochzeit.jpg",
     note: "9.8.1986, ein Samstag. Am 9. August war der 40. Hochzeitstag."
+  },
+  {
+    q: "Was berührst du auf diesem Foto?",
+    a: ["Einen Hund", "Eine Puppe", "Einen Teddybär", "Eine Katze"],
+    c: 3,
+    img: "img/kindheit-raetsel.jpg?v=3",
+    imgReveal: "img/kindheit-aufgeloest.jpg",
+    note: "Nach der Auflösung erscheint das Foto ohne Verpixelung. Fragen, wie die Katze hieß und wer das andere Mädchen ist."
+  },
+  {
+    q: "Du hast Matthias und Martin einmal zum Spiel 1. FC Nürnberg gegen FC Bayern ins Stadion geschickt. Wie ging das Spiel aus?",
+    a: ["0:0", "3:0 für Bayern", "2:1 für Nürnberg", "3:0 für Nürnberg"],
+    c: 3,
+    note: "2. Februar 2007, Bundesliga im Frankenstadion. Tore: Saenko, Schroth, Vittek, Oliver Kahn stand bei Bayern im Tor. Eine echte Sensation, und du als Bayern-Fan mittendrin. Kurz erzählen, wie die Heimfahrt war."
+  },
+  {
+    q: "„Dem lebhaften, motorisch sehr unruhigen Schüler fällt es nicht immer leicht, die Regeln des Schulalltags einzuhalten.“ In wessen Zeugnis stand dieser Satz?",
+    a: ["Darius", "Thomas", "Leo", "David"],
+    c: 2,
+    note: "Leo ist da: Bitte ihn aufzustehen und frag, was er damals angestellt hat."
+  },
+  {
+    q: "Du siehst gleich vier Gesten. Welche davon war NIE ein Trend unter Jugendlichen?",
+    a: ["Der Dab", "Das Einhorn", "Der Floss", "Six Seven"],
+    c: 1,
+    note: "VORFÜHRUNG, bevor du die Antworten vorliest: Lara macht den Dab (Kopf in die Armbeuge, anderer Arm schräg ausgestreckt, ca. 2015/16). David macht das Einhorn (Faust auf den Kopf klopfen, dann mit dem Finger in die Luft zeigen, erfunden, todernst vorführen!). Leo macht den Floss (Arme vor und hinter dem Körper schwingen, ca. 2018, Fortnite). Sarah macht Six Seven (Hände auf und ab wie eine Waage, 2025). Bonus bei der Auflösung: „Six Seven“ bedeutet übrigens gar nichts, das ist genau der Witz. Am Ende macht der ganze Saal Six Seven."
+  },
+  {
+    q: "Auf welchem Berg bist du mit Ursula als Kind Schlitten gefahren?",
+    a: ["Annaberg", "Gritzberg", "Kakauberg", "Schneekoppe"],
+    c: 1,
+    note: "Frage kommt von Ursula. Lass sie erzählen, wie das damals war: Wer ist am häufigsten im Schnee gelandet?"
+  },
+  {
+    q: "Wie viele Schulen gab es in Karb, als du dort Kind warst?",
+    a: ["2", "3", "4", "5"],
+    c: 2,
+    note: "Frage kommt von Ursula. Danach fragen, auf welche der vier Schulen die beiden gegangen sind und wie ihr Schulweg war."
   },
   {
     q: "Welche Aussage über diesen Song stimmt NICHT?",

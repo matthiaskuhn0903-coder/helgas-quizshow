@@ -42,7 +42,7 @@
       var conf = "";
       for (var k = 0; k < 40; k++) conf += '<i style="left:' + ((k * 37) % 100) + '%;animation-duration:' + (3 + (k % 5)) + 's;animation-delay:-' + (k % 7) * 0.6 + 's"></i>';
       return '<div class="confetti" aria-hidden="true">' + conf + '</div><div class="stage splash">' + orb() +
-        '<p class="label">Alle ' + N + ' Fragen richtig</p><h1>Helga hat es geschafft!</h1><p>Herzlichen Glückwunsch zum Geburtstag, Mama. Der Hauptgewinn gehört dir.</p></div>';
+        '<p class="label">Alle ' + N + ' Fragen richtig</p><h1>Helga hat es geschafft!</h1><p>Herzlichen Glückwunsch zum Geburtstag, liebe Helga. Der Hauptgewinn gehört dir.</p></div>';
     }
     var q = Q[G.q], i = G.q, gone = goneNow();
     var h = '<div class="stage"><div class="topline"><div><p class="label">Frage ' + (i + 1) + ' von ' + N + '</p><div class="stake">' + esc(stakeLabel(i)) + '</div></div><div class="jokers">' +
