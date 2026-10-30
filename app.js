@@ -44,10 +44,11 @@
       return '<div class="confetti" aria-hidden="true">' + conf + '</div><div class="stage splash">' + orb() +
         '<p class="label">Alle ' + N + ' Fragen richtig</p><h1>Helga hat es geschafft!</h1><p>Herzlichen Glückwunsch zum Geburtstag, Mama. Der Hauptgewinn gehört dir.</p></div>';
     }
-    var q = Q[G.q], i = G.q, gone = (G.fifty === i) ? q.fifty : [];
+    var q = Q[G.q], i = G.q, gone = goneNow();
     var h = '<div class="stage"><div class="topline"><div><p class="label">Frage ' + (i + 1) + ' von ' + N + '</p><div class="stake">' + esc(stakeLabel(i)) + '</div></div><div class="jokers">' +
       '<span class="joker' + (G.fifty !== null ? ' used' : '') + '">50:50</span><span class="joker' + (G.poll || G.vote ? ' used' : '') + '">Publikum</span><span class="joker' + (G.saal !== null ? ' used' : '') + '">Saal</span></div></div>';
-    if (q.img) h += '<img class="pic" src="' + esc(q.img) + '" alt="Bild zur Frage">';
+    var pic = (G.step === "reveal" && q.imgReveal) ? q.imgReveal : q.img;
+    if (pic) h += '<img class="pic" src="' + esc(pic) + '" alt="Bild zur Frage">';
     var voting = votingNow(), canVote = voting && v === "publikum", mine = voting ? myVote[G.vote.id] : undefined;
     h += '<div class="loz q">' + esc(q.q) + '</div>';
     if (canVote) h += '<div class="banner"><strong>Publikumsjoker:</strong> ' + (mine === undefined ? 'Tippe auf die Antwort, die du für richtig hältst.' : 'Deine Stimme: ' + L[mine] + '. Du kannst noch wechseln.') + '</div>';
@@ -74,6 +75,7 @@
     }
     return h + '</div>';
   }
+  function goneNow() { return G.fifty === G.q ? (G.fiftyOut || []) : []; }
   function votingNow() { return !!(G.vote && G.vote.open && G.vote.q === G.q && (G.step === "question" || G.step === "locked")); }
   function tallyCounts() { var c = [0, 0, 0, 0], n = 0; Object.keys(tally).forEach(function (k) { var x = tally[k]; if (x >= 0 && x < 4) { c[x]++; n++; } }); return { c: c, n: n }; }
   function tallyHtml() { var t = tallyCounts(); return t.n + (t.n === 1 ? ' Stimme' : ' Stimmen') + ': ' + L.map(function (l, k) { return l + ' ' + t.c[k]; }).join(' · '); }
@@ -99,7 +101,7 @@
       if (G.step === "question") {
         d += '<div class="group"><p class="label">Helga loggt ein</p><div class="row">';
         for (var a = 0; a < 4; a++) {
-          var gone = (G.fifty === i && q.fifty.indexOf(a) > -1);
+          var gone = goneNow().indexOf(a) > -1;
           d += '<button class="btn lock' + (a === q.c ? ' correct' : '') + '" data-act="lock" data-v="' + a + '"' + (gone || host.busy ? ' disabled' : '') + '>' + L[a] + ': ' + esc(q.a[a]) + '</button>';
         }
         d += '</div></div><div class="group"><p class="label">Joker</p><div class="row">' +
@@ -230,7 +232,7 @@
   }
 
   function suggestPoll() {
-    var q = Q[G.q], left = [0, 1, 2, 3].filter(function (a) { return a !== q.c && !(G.fifty === G.q && q.fifty.indexOf(a) > -1); });
+    var q = Q[G.q], left = [0, 1, 2, 3].filter(function (a) { return a !== q.c && goneNow().indexOf(a) === -1; });
     var pct = [0, 0, 0, 0], main = 55 + Math.floor(Math.random() * 16); pct[q.c] = main; var rest = 100 - main;
     left.forEach(function (a, k) { var v = k === left.length - 1 ? rest : Math.floor(rest * (0.35 + Math.random() * 0.3)); pct[a] = v; rest -= v; });
     return pct;
@@ -244,7 +246,11 @@
     else if (act === "unlock") commit({ step: "question", picked: null });
     else if (act === "reveal") commit({ step: "reveal" });
     else if (act === "next") commit(i === N - 1 ? { step: "finale" } : { step: "question", q: i + 1, picked: null });
-    else if (act === "fifty") commit({ fifty: i });
+    else if (act === "fifty") {
+      var wrong = [0, 1, 2, 3].filter(function (a) { return a !== Q[i].c; });
+      wrong.sort(function () { return Math.random() - 0.5; });
+      commit({ fifty: i, fiftyOut: wrong.slice(0, 2) });
+    }
     else if (act === "saal") commit({ saal: i });
     else if (act === "voteopen") { tally = {}; commit({ vote: { q: i, open: true, id: Math.random().toString(36).slice(2, 10), t: Date.now() } }); }
     else if (act === "voteclose") {
