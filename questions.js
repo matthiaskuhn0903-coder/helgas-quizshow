@@ -20,7 +20,7 @@ window.QUIZ = [
     q: "Was berührst du auf diesem Foto? (Du bist rechts im Bild.)",
     a: ["Einen Hund", "Eine Puppe", "Einen Teddybär", "Eine Katze"],
     c: 3,
-    img: "img/kindheit-raetsel.jpg?v=2",
+    img: "img/kindheit-raetsel.jpg?v=3",
     imgReveal: "img/kindheit-aufgeloest.jpg",
     note: "Nach der Auflösung erscheint das Foto ohne Verpixelung. Fragen, wie die Katze hieß und wer das andere Mädchen ist."
   },
