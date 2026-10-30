@@ -37,6 +37,12 @@ window.QUIZ = [
     note: "Leo ist da: Bitte ihn aufzustehen und frag, was er damals angestellt hat."
   },
   {
+    q: "David und Sarah rufen „Six Seven!“ und bewegen dabei die Hände abwechselnd auf und ab. Was bedeutet das?",
+    a: ["Ist mir egal", "Mir geht's super", "Bis morgen", "Es hat keine Bedeutung"],
+    c: 3,
+    note: "Hier greift Helga bestimmt zum Joker im Saal, David und Sarah springen auf. Auflösung: Der Witz ist, dass es nichts bedeutet. Stammt aus dem US-Rapsong „Doot Doot (6 7)“ von Skrilla, bekannt geworden über Basketballer LaMelo Ball (6 Fuß 7 Zoll groß). Dictionary.com hat „67“ zum Wort des Jahres 2025 gekürt. Dann: David und Sarah machen die Geste vor, der ganze Saal macht mit."
+  },
+  {
     q: "Welchen dieser Sprüche hast du deinen beiden Söhnen NICHT mit auf den Weg gegeben?",
     a: ["Wo ein Wille ist, ist auch ein Weg", "Trau dich alles, mehr als Nein sagen können sie nicht", "Wer nichts macht, dem passiert auch nichts", "Iss deinen Teller leer, dann gibt's schönes Wetter"],
     c: 3,
