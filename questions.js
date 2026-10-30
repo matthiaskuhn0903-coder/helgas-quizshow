@@ -36,7 +36,8 @@ window.QUIZ = [
     q: "„Dem lebhaften, motorisch sehr unruhigen Schüler fällt es nicht immer leicht, die Regeln des Schulalltags einzuhalten.“ In wessen Zeugnis stand dieser Satz?",
     a: ["Darius", "Thomas", "Leo", "David"],
     c: 2,
-    note: "Leo ist da: Bitte ihn aufzustehen und frag, was er damals angestellt hat."
+    imgReveal: "img/leo.jpg",
+    note: "Nach der Auflösung erscheint das Foto von Leo mit seiner Kerze (2015). Leo ist da: Bitte ihn aufzustehen und frag, was er damals angestellt hat."
   },
   {
     q: "Du siehst gleich vier Gesten. Welche davon war NIE ein Trend unter Jugendlichen?",
