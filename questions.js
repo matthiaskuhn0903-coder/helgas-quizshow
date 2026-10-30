@@ -40,7 +40,7 @@ window.QUIZ = [
     q: "Unsere Jugend führt dir jetzt vier Gesten vor. Welche davon war NIE ein Trend unter Jugendlichen?",
     a: ["Der Dab", "Das Einhorn", "Der Floss", "Six Seven"],
     c: 1,
-    note: "VORFÜHRUNG, bevor du die Antworten vorliest: Leo macht den Dab (Kopf in die Armbeuge, anderer Arm schräg ausgestreckt, ca. 2015/16). David macht das Einhorn (Faust auf den Kopf klopfen, dann mit dem Finger in die Luft zeigen, erfunden, todernst vorführen!). Leo oder David machen den Floss (Arme vor und hinter dem Körper schwingen, ca. 2018, Fortnite). Sarah macht Six Seven (Hände auf und ab wie eine Waage, 2025). Bonus bei der Auflösung: „Six Seven“ bedeutet übrigens gar nichts, das ist genau der Witz. Am Ende macht der ganze Saal Six Seven."
+    note: "VORFÜHRUNG, bevor du die Antworten vorliest: Lara macht den Dab (Kopf in die Armbeuge, anderer Arm schräg ausgestreckt, ca. 2015/16). David macht das Einhorn (Faust auf den Kopf klopfen, dann mit dem Finger in die Luft zeigen, erfunden, todernst vorführen!). Leo macht den Floss (Arme vor und hinter dem Körper schwingen, ca. 2018, Fortnite). Sarah macht Six Seven (Hände auf und ab wie eine Waage, 2025). Bonus bei der Auflösung: „Six Seven“ bedeutet übrigens gar nichts, das ist genau der Witz. Am Ende macht der ganze Saal Six Seven."
   },
   {
     q: "Welchen dieser Sprüche hast du deinen beiden Söhnen NICHT mit auf den Weg gegeben?",
