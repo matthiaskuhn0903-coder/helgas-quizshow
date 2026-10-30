@@ -67,6 +67,6 @@ window.QUIZ = [
     c: 2,
     img: "img/saeule-raetsel.jpg",
     imgReveal: "img/saeule-budapest.jpg",
-    note: "Das Millenniumsdenkmal auf dem Heldenplatz in Budapest: 36 m hoch, oben Erzengel Gabriel, gebaut zum 1000-jährigen Bestehen Ungarns (1896). Nach der Auflösung erscheint das ganze Foto mit den Reiterstatuen. Gemein: Alle vier Städte haben eine hohe Säule mit geflügelter Figur (Berlin: Siegessäule mit der Goldelse, Mexiko-Stadt: Ángel de la Independencia, Paris: Julisäule auf der Place de la Bastille). Nach der Auflösung: „Und genau da wirst du bald stehen!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, mit Halt in Budapest!“ Luftschlangen-Kanone und Bordkarte."
+    note: "VOR DEN ANTWORTEN: Sag ihr, dass du schon in allen vier Städten warst und dort diese oder eine ähnliche Säule gesehen hast. Notfall-Tipp, falls sie keinen Joker mehr hat: „Denk mal an die Donau.“ AUFLÖSUNG: Das Millenniumsdenkmal auf dem Heldenplatz in Budapest: 36 m hoch, oben Erzengel Gabriel, gebaut zum 1000-jährigen Bestehen Ungarns (1896). Nach der Auflösung erscheint das ganze Foto mit den Reiterstatuen. Gemein: Alle vier Städte haben eine hohe Säule mit geflügelter Figur (Berlin: Siegessäule mit der Goldelse, Mexiko-Stadt: Ángel de la Independencia, Paris: Julisäule auf der Place de la Bastille). Nach der Auflösung: „Und genau da wirst du bald stehen!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, mit Halt in Budapest!“ Luftschlangen-Kanone und Bordkarte."
   }
 ];
