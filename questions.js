@@ -62,9 +62,11 @@ window.QUIZ = [
     note: "MUSIK: Lara spielt den Song an, bevor du die Antworten vorliest. Alle mitsingen lassen („Ma-ia-hii, ma-ia-huu“). O-Zone kommen aus Moldau und waren nie beim ESC. Der Titel heißt übersetzt „Liebe unter den Lindenbäumen“."
   },
   {
-    q: "Die Millionenfrage: In welcher Stadt steht diese Säule mit der goldenen Engelsfigur?",
+    q: "Die Millionenfrage: In welcher Stadt steht diese Säule?",
     a: ["Berlin", "Mexiko-Stadt", "Budapest", "Paris"],
     c: 2,
-    note: "Das Millenniumsdenkmal auf dem Heldenplatz in Budapest: 36 m hoch, oben Erzengel Gabriel, gebaut zum 1000-jährigen Bestehen Ungarns (1896). Gemein: Alle vier Städte haben eine ähnliche Säule mit goldener Figur (Berlin: Siegessäule mit der Goldelse, Mexiko-Stadt: Ángel de la Independencia, Paris: Julisäule auf der Place de la Bastille). Nach der Auflösung: „Und genau da wirst du bald stehen!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, mit Halt in Budapest!“ Luftschlangen-Kanone und Bordkarte."
+    img: "img/saeule-raetsel.jpg",
+    imgReveal: "img/saeule-budapest.jpg",
+    note: "Das Millenniumsdenkmal auf dem Heldenplatz in Budapest: 36 m hoch, oben Erzengel Gabriel, gebaut zum 1000-jährigen Bestehen Ungarns (1896). Nach der Auflösung erscheint das ganze Foto mit den Reiterstatuen. Gemein: Alle vier Städte haben eine hohe Säule mit geflügelter Figur (Berlin: Siegessäule mit der Goldelse, Mexiko-Stadt: Ángel de la Independencia, Paris: Julisäule auf der Place de la Bastille). Nach der Auflösung: „Und genau da wirst du bald stehen!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, mit Halt in Budapest!“ Luftschlangen-Kanone und Bordkarte."
   }
 ];
