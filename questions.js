@@ -29,7 +29,8 @@ window.QUIZ = [
     q: "Du hast Matthias und Martin einmal zum Spiel 1. FC Nürnberg gegen FC Bayern ins Stadion geschickt. Wie ging das Spiel aus?",
     a: ["0:0", "3:0 für Bayern", "2:1 für Nürnberg", "3:0 für Nürnberg"],
     c: 3,
-    note: "2. Februar 2007, Bundesliga im Frankenstadion. Tore: Saenko, Schroth, Vittek, Oliver Kahn stand bei Bayern im Tor. Eine echte Sensation, und du als Bayern-Fan mittendrin. Kurz erzählen, wie die Heimfahrt war."
+    imgReveal: "img/fussball-3-0.jpg",
+    note: "Nach der Auflösung erscheint die Anzeigetafel mit dem 3:0. 2. Februar 2007, Bundesliga im Nürnberger Stadion (damals easyCredit-Stadion). Tore: Saenko, Schroth, Vittek, Oliver Kahn stand bei Bayern im Tor. Eine echte Sensation, und du als Bayern-Fan mittendrin. Kurz erzählen, wie die Heimfahrt war."
   },
   {
     q: "„Dem lebhaften, motorisch sehr unruhigen Schüler fällt es nicht immer leicht, die Regeln des Schulalltags einzuhalten.“ In wessen Zeugnis stand dieser Satz?",
