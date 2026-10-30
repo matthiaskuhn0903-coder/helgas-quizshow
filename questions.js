@@ -62,9 +62,9 @@ window.QUIZ = [
     note: "MUSIK: Lara spielt den Song an, bevor du die Antworten vorliest. Alle mitsingen lassen („Ma-ia-hii, ma-ia-huu“). O-Zone kommen aus Moldau und waren nie beim ESC. Der Titel heißt übersetzt „Liebe unter den Lindenbäumen“."
   },
   {
-    q: "Die Millionenfrage: In welcher dieser Städte warst du noch NIE?",
-    a: ["München", "Salzburg", "Budapest", "Wien"],
+    q: "Die Millionenfrage: In welcher Stadt steht diese Säule mit der goldenen Engelsfigur?",
+    a: ["Berlin", "Mexiko-Stadt", "Budapest", "Paris"],
     c: 2,
-    note: "München, Salzburg und Wien kennt sie. Nach der Auflösung: „Budapest fehlt dir also noch … Das ändern wir jetzt!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, und Budapest ist mit dabei!“ Luftschlangen-Kanone und Bordkarte."
+    note: "Das Millenniumsdenkmal auf dem Heldenplatz in Budapest: 36 m hoch, oben Erzengel Gabriel, gebaut zum 1000-jährigen Bestehen Ungarns (1896). Gemein: Alle vier Städte haben eine ähnliche Säule mit goldener Figur (Berlin: Siegessäule mit der Goldelse, Mexiko-Stadt: Ángel de la Independencia, Paris: Julisäule auf der Place de la Bastille). Nach der Auflösung: „Und genau da wirst du bald stehen!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, mit Halt in Budapest!“ Luftschlangen-Kanone und Bordkarte."
   }
 ];
