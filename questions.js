@@ -51,9 +51,9 @@ window.QUIZ = [
   {
     q: "An welchem Wochentag habt ihr beide geheiratet?",
     a: ["Donnerstag", "Freitag", "Samstag", "Sonntag"],
-    c: 1,
+    c: 2,
     img: "img/hochzeit.jpg",
-    note: "8.8.1986, ein Freitag. Im August war der 40. Hochzeitstag. Samstag ist die typische Falle."
+    note: "9.8.1986, ein Samstag. Am 9. August war der 40. Hochzeitstag."
   },
   {
     q: "Welche Aussage über diesen Song stimmt NICHT?",
