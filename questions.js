@@ -62,15 +62,9 @@ window.QUIZ = [
     note: "MUSIK: Lara spielt den Song an, bevor du die Antworten vorliest. Alle mitsingen lassen („Ma-ia-hii, ma-ia-huu“). O-Zone kommen aus Moldau und waren nie beim ESC. Der Titel heißt übersetzt „Liebe unter den Lindenbäumen“."
   },
   {
-    q: "Zum Schluss geht es auf Reisen. In welcher dieser Städte warst du noch NIE?",
+    q: "Die Millionenfrage: In welcher dieser Städte warst du noch NIE?",
     a: ["Regensburg", "Salzburg", "Budapest", "Wien"],
     c: 2,
-    note: "Regensburg, Salzburg und Wien kennt sie. Nach der Auflösung geheimnisvoll: „Budapest fehlt dir also noch. Merk dir das mal …“ Noch nichts verraten."
-  },
-  {
-    q: "Die Millionenfrage: Durch wie viele Länder fließt die Donau?",
-    a: ["4", "6", "8", "10"],
-    c: 3,
-    note: "Deutschland, Österreich, Slowakei, Ungarn, Kroatien, Serbien, Rumänien, Bulgarien, Moldau, Ukraine: mehr als jeder andere Fluss der Welt. Nach dem Klick auf „Zum Finale“: „Und erinnerst du dich an Budapest? Da kommst du jetzt hin, denn dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau!“ Luftschlangen-Kanone und Bordkarte."
+    note: "Regensburg, Salzburg und Wien kennt sie. Nach der Auflösung: „Budapest fehlt dir also noch … Das ändern wir jetzt!“ Dann auf „Zum Finale“ klicken: „Dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau, und Budapest ist mit dabei!“ Luftschlangen-Kanone und Bordkarte."
   }
 ];
