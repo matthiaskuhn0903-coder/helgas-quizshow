@@ -37,10 +37,10 @@ window.QUIZ = [
     note: "Leo ist da: Bitte ihn aufzustehen und frag, was er damals angestellt hat."
   },
   {
-    q: "Jugendliche rufen „Six Seven!“ und bewegen dabei die Hände abwechselnd auf und ab. Was bedeutet das?",
-    a: ["Ist mir egal", "Wie geht's?", "Bis morgen", "Es hat keine Bedeutung"],
-    c: 3,
-    note: "Hier greift Helga bestimmt zum Joker im Saal, David und Sarah springen auf. Auflösung: Der Witz ist, dass es nichts bedeutet. Stammt aus dem US-Rapsong „Doot Doot (6 7)“ von Skrilla, bekannt geworden über Basketballer LaMelo Ball (6 Fuß 7 Zoll groß). Dictionary.com hat „67“ zum Wort des Jahres 2025 gekürt. Dann: David und Sarah machen die Geste vor, der ganze Saal macht mit."
+    q: "Unsere Jugend führt dir jetzt vier Gesten vor. Welche davon war NIE ein Trend unter Jugendlichen?",
+    a: ["Der Dab", "Das Einhorn", "Der Floss", "Six Seven"],
+    c: 1,
+    note: "VORFÜHRUNG, bevor du die Antworten vorliest: Leo macht den Dab (Kopf in die Armbeuge, anderer Arm schräg ausgestreckt, ca. 2015/16). David macht das Einhorn (Faust auf den Kopf klopfen, dann mit dem Finger in die Luft zeigen, erfunden, todernst vorführen!). Leo oder David machen den Floss (Arme vor und hinter dem Körper schwingen, ca. 2018, Fortnite). Sarah macht Six Seven (Hände auf und ab wie eine Waage, 2025). Bonus bei der Auflösung: „Six Seven“ bedeutet übrigens gar nichts, das ist genau der Witz. Am Ende macht der ganze Saal Six Seven."
   },
   {
     q: "Welchen dieser Sprüche hast du deinen beiden Söhnen NICHT mit auf den Weg gegeben?",
