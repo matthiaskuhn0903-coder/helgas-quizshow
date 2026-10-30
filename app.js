@@ -11,6 +11,8 @@
   var STORE_KEY = "helga-quiz-game";
 
   var Q = window.QUIZ || [], N = Q.length, L = ["A", "B", "C", "D"];
+  // Fingerabdruck der Fragen: weicht er vom Pult ab, lädt der Bildschirm die neue Version
+  var QV = (function (t) { var h = 0; for (var i = 0; i < t.length; i++) { h = (h * 31 + t.charCodeAt(i)) | 0; } return String(h); })(JSON.stringify(Q));
   var MONEY = ["50", "100", "500", "1.000", "2.000", "8.000", "32.000", "125.000", "500.000"];
   var FRESH = { step: "intro", q: 0, picked: null, fifty: null, poll: null, saal: null, vote: null, ts: 0 };
 
@@ -152,6 +154,11 @@
       if (!data || !data.g || typeof data.g.step !== "string") return;
       if (msg.id) lastId = msg.id;
       if ((data.g.ts || 0) < (G.ts || 0)) return;
+      if (!isHost() && data.g.qv && data.g.qv !== QV) {
+        var key = "helga-reload-" + data.g.qv, done = null;
+        try { done = sessionStorage.getItem(key); sessionStorage.setItem(key, "1"); } catch (e) {}
+        if (!done) { location.replace(location.pathname + "?r=" + Date.now() + location.hash); return; }
+      }
       var before = G.step + G.q;
       G = data.g;
       if (!isHost() || before !== G.step + G.q) render();
@@ -209,7 +216,7 @@
     } catch (e) {}
   }
   function send() {
-    G.ts = Date.now();
+    G.ts = Date.now(); G.qv = QV;
     try { localStorage.setItem(STORE_KEY, JSON.stringify(G)); } catch (e) {}
     host.busy = true; host.err = false; render();
     var body = JSON.stringify({ g: G }), viaMqtt = false;
