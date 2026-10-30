@@ -48,5 +48,23 @@ window.QUIZ = [
     c: 1,
     img: "img/hochzeit.jpg",
     note: "8.8.1986, ein Freitag. Im August war der 40. Hochzeitstag. Samstag ist die typische Falle."
+  },
+  {
+    q: "Welche Aussage über diesen Song stimmt NICHT?",
+    a: ["Der Song heißt „Dragostea din tei“", "Die Band O-Zone besteht aus drei Sängern", "Er war 2004 ein Sommerhit in ganz Europa", "Er hat den Eurovision Song Contest gewonnen"],
+    c: 3,
+    note: "MUSIK: Lara spielt den Song an, bevor du die Antworten vorliest. Alle mitsingen lassen („Ma-ia-hii, ma-ia-huu“). O-Zone kommen aus Moldau und waren nie beim ESC. Der Titel heißt übersetzt „Liebe unter den Lindenbäumen“."
+  },
+  {
+    q: "Jetzt geht es auf Reisen. Welche dieser Städte liegt NICHT an der Donau?",
+    a: ["Passau", "Wien", "Prag", "Budapest"],
+    c: 2,
+    note: "Prag liegt an der Moldau. Noch nichts verraten, nur geheimnisvoll lächeln: „Die Donau wird heute noch wichtig.“"
+  },
+  {
+    q: "Die Millionenfrage: Durch wie viele Länder fließt die Donau?",
+    a: ["4", "6", "8", "10"],
+    c: 3,
+    note: "Deutschland, Österreich, Slowakei, Ungarn, Kroatien, Serbien, Rumänien, Bulgarien, Moldau, Ukraine: mehr als jeder andere Fluss der Welt. Nach dem Klick auf „Zum Finale“: „Und ein paar davon wirst du bald selbst sehen, denn dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau!“ Luftschlangen-Kanone und Bordkarte."
   }
 ];
