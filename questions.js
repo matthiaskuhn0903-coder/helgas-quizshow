@@ -1,4 +1,4 @@
-// Fragen für Helgas Quizshow (vorläufige Reihenfolge).
+// Fragen für Helgas Quizshow (Spielreihenfolge).
 // c = Index der richtigen Antwort (0=A, 1=B, 2=C, 3=D)
 // img = Bild zur Frage, imgReveal = Bild nach der Auflösung (optional)
 // note = nur am Moderationspult sichtbar
@@ -62,15 +62,15 @@ window.QUIZ = [
     note: "MUSIK: Lara spielt den Song an, bevor du die Antworten vorliest. Alle mitsingen lassen („Ma-ia-hii, ma-ia-huu“). O-Zone kommen aus Moldau und waren nie beim ESC. Der Titel heißt übersetzt „Liebe unter den Lindenbäumen“."
   },
   {
-    q: "Jetzt geht es auf Reisen. Welche dieser Städte liegt NICHT an der Donau?",
-    a: ["Passau", "Wien", "Prag", "Budapest"],
+    q: "Zum Schluss geht es auf Reisen. In welcher dieser Städte warst du noch NIE?",
+    a: ["Regensburg", "Salzburg", "Budapest", "Wien"],
     c: 2,
-    note: "Prag liegt an der Moldau. Noch nichts verraten, nur geheimnisvoll lächeln: „Die Donau wird heute noch wichtig.“"
+    note: "Regensburg, Salzburg und Wien kennt sie. Nach der Auflösung geheimnisvoll: „Budapest fehlt dir also noch. Merk dir das mal …“ Noch nichts verraten."
   },
   {
     q: "Die Millionenfrage: Durch wie viele Länder fließt die Donau?",
     a: ["4", "6", "8", "10"],
     c: 3,
-    note: "Deutschland, Österreich, Slowakei, Ungarn, Kroatien, Serbien, Rumänien, Bulgarien, Moldau, Ukraine: mehr als jeder andere Fluss der Welt. Nach dem Klick auf „Zum Finale“: „Und ein paar davon wirst du bald selbst sehen, denn dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau!“ Luftschlangen-Kanone und Bordkarte."
+    note: "Deutschland, Österreich, Slowakei, Ungarn, Kroatien, Serbien, Rumänien, Bulgarien, Moldau, Ukraine: mehr als jeder andere Fluss der Welt. Nach dem Klick auf „Zum Finale“: „Und erinnerst du dich an Budapest? Da kommst du jetzt hin, denn dein Hauptgewinn ist eine Flusskreuzfahrt auf der Donau!“ Luftschlangen-Kanone und Bordkarte."
   }
 ];
